@@ -21,7 +21,6 @@ public class DefaultItemDecoration extends RecyclerView.ItemDecoration {
         mBackgroundPaint.setColor(backgroundColor);
         mDividerPaint = new Paint();
         mDividerPaint.setColor(mDividerColor);
-
         mPaddingLeft = middlePaddingLeft;
     }
 

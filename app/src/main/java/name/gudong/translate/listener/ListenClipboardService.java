@@ -189,9 +189,11 @@ public final class ListenClipboardService extends Service implements ITipFloatVi
     @Override
     public void showResult(Result result, boolean isShowFavorite) {
         mTipViewController.show(result, isShowFavorite, false,this);
+
         if(mPresenter.isPlaySoundsAuto()){
             mPresenter.playSound(result.getMp3FileName(),result.getEnMp3());
         }
+
     }
 
     @Override
@@ -266,9 +268,11 @@ public final class ListenClipboardService extends Service implements ITipFloatVi
         removeTipView(result);
     }
 
+
     @Override
-    public void onInitFavorite(ImageView mIvFavorite, Result result) {
-        mPresenter.initFavoriteStatus(result);
+    public boolean onInitFavorite(ImageView mIvFavorite, Result result) {
+        if(mPresenter.initFavoriteStatus(result)) return true;
+        else return false;
     }
 
     @Override

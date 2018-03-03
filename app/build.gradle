@@ -73,11 +73,11 @@ android {
     }
 
     buildTypes {
-        debug {
+       /* debug {
             applicationIdSuffix ".debug"
             debuggable true
             resValue "string", "tray__authority", "${cfg.package}.debug.tray"
-        }
+        }*/
         release {
             if (signingConfigs.releaseConfig != null) {
                 signingConfig signingConfigs.releaseConfig

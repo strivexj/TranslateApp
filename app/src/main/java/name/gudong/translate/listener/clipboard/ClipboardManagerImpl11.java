@@ -25,6 +25,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public final class ClipboardManagerImpl11 extends ClipboardManagerCompat {
@@ -66,6 +67,7 @@ public final class ClipboardManagerImpl11 extends ClipboardManagerCompat {
 
     @Override
     public CharSequence getText() {
+        Log.d("data","get text"+" "+mClipboardManager.getText().toString());
         return mClipboardManager.getText();
     }
 }

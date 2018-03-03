@@ -30,6 +30,7 @@ import android.net.Uri;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.litesuits.orm.LiteOrm;
@@ -108,13 +109,14 @@ public class MainPresenter extends BasePresenter<IMainView> {
                 .subscribe(new Action1<List<String>>() {
                     @Override
                     public void call(List<String> strings) {
-                        if(mView!=null){
+                        if (mView != null) {
                             mView.attachLocalDic(strings);
                         }
 
                     }
                 });
     }
+
     public boolean hasExtraResult(Intent intent) {
         return intent.hasExtra(KEY_RESULT);
     }
@@ -163,15 +165,17 @@ public class MainPresenter extends BasePresenter<IMainView> {
             }
         }
     }
+
     private String mLastQuery = "";
-    private ETranslateFrom  mLastFrom = ETranslateFrom.JIN_SHAN;
+    private ETranslateFrom mLastFrom = ETranslateFrom.JIN_SHAN;
+
     public void executeSearch(String keywords) {
         ETranslateFrom from = SpUtils.getTranslateEngineWay(getContext());
         //去掉重复
         if(mLastQuery.equals(keywords) && mLastFrom == from){
             return;
         }
-        mLastQuery = keywords;
+        mLastQuery = keywords.replace(".", "").replace(",", "");
         mLastFrom = from;
 
         mView.onPrepareTranslate();
@@ -251,7 +255,7 @@ public class MainPresenter extends BasePresenter<IMainView> {
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
-                        if(mView!=null){
+                        if (mView != null) {
                             mView.onTranslateComplete();
                         }
                     }
@@ -297,7 +301,7 @@ public class MainPresenter extends BasePresenter<IMainView> {
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             getContext().startActivity(intent);
-        }catch (ActivityNotFoundException e){
+        } catch (ActivityNotFoundException e) {
             Toast.makeText(mContext, "没有找到合适的应用商店", Toast.LENGTH_SHORT).show();
         }
     }
@@ -376,8 +380,8 @@ public class MainPresenter extends BasePresenter<IMainView> {
         int year = c.get(Calendar.YEAR); // 获取当前年份
         int month = c.get(Calendar.MONTH) + 1;// 获取当前月份
         int day = c.get(Calendar.DAY_OF_MONTH);// 获取当日期
-        if(year == 2018 && month == 2){
-            if(day>=16 && day<=21){
+        if (year == 2018 && month == 2) {
+            if (day >= 16 && day <= 28) {
                 AnswerUtil.showEggs();
                 mView.playNewYearAnim();
             }

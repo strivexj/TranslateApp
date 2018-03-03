@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.litesuits.orm.LiteOrm;
+import com.litesuits.orm.db.assit.QueryBuilder;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -81,10 +83,10 @@ public class TipView extends LinearLayout {
         mTvPoint.setText(error);
     }
 
-    public void setContent(Result result, boolean isShowFavoriteButton,boolean isShowDoneMark) {
+    public void setContent(Result result, boolean isShowFavoriteButton, boolean isShowDoneMark) {
         if (result == null) return;
         mResult = result;
-        initView(result,isShowFavoriteButton,isShowDoneMark);
+        initView(result, isShowFavoriteButton, isShowDoneMark);
         addListener(result);
 
         setQuery(result.getQuery());
@@ -104,6 +106,8 @@ public class TipView extends LinearLayout {
         } else {
             error(getContext().getString(R.string.tip_explain_empty));
         }
+        if (!mListener.onInitFavorite(mIvFavorite, result))
+            mListener.onClickFavorite(mIvFavorite, result);
     }
 
     //设置显示动画
@@ -134,16 +138,16 @@ public class TipView extends LinearLayout {
         mLlDst.addView(ViewUtil.getWordsView(getContext(), explains, android.R.color.white, false));
     }
 
-    private void initView(Result result,boolean isShowFavoriteButton,boolean isShowDoneMark){
+    private void initView(Result result, boolean isShowFavoriteButton, boolean isShowDoneMark) {
         mIvFavorite.setVisibility(isShowFavoriteButton ? View.VISIBLE : View.GONE);
         mIvDone.setVisibility(isShowDoneMark ? View.VISIBLE : View.GONE);
         mIvSound.setVisibility(TextUtils.isEmpty(result.getEnMp3()) ? View.GONE : View.VISIBLE);
         mListener.onInitFavorite(mIvFavorite, result);
     }
 
-    private void addListener(Result result){
+    private void addListener(Result result) {
         mIvFavorite.setOnClickListener((v) -> {
-            mListener.onClickFavorite(v,result);
+            mListener.onClickFavorite(v, result);
         });
 
         mIvSound.setOnClickListener(v -> {
@@ -151,9 +155,9 @@ public class TipView extends LinearLayout {
                 mListener.onClickPlaySound(v, result);
             }
         });
-        mIvDone.setOnClickListener(v->{
-            if(mListener != null){
-                mListener.onClickDone(v,result);
+        mIvDone.setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.onClickDone(v, result);
             }
         });
         setOnClickListener(new OnClickListener() {
@@ -186,10 +190,11 @@ public class TipView extends LinearLayout {
 
         /**
          * set up favorite view state  base on it change background of favorite view
+         *
          * @param mIvFavorite
          * @param result
          */
-        void onInitFavorite(ImageView mIvFavorite, Result result);
+        boolean onInitFavorite(ImageView mIvFavorite, Result result);
 
         void removeTipView(Result result);
 
@@ -213,30 +218,31 @@ public class TipView extends LinearLayout {
 
     private float lastX;
     float downX = 0;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()){
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 downX = event.getX();
-                Logger.i(TAG,"downX is "+downX);
+                Logger.i(TAG, "downX is " + downX);
                 lastX = downX;
                 break;
             case MotionEvent.ACTION_MOVE:
                 float moveX = event.getX();
                 //Logger.i(TAG,"moveX is "+moveX);
-                rootView.offsetLeftAndRight((int) (moveX-lastX));
+                rootView.offsetLeftAndRight((int) (moveX - lastX));
                 lastX = moveX;
                 break;
             case MotionEvent.ACTION_UP:
                 float upX = event.getX();
-                Logger.i(TAG,"upX is "+upX+" downX is "+downX+" distance is "+(upX-downX));
+                Logger.i(TAG, "upX is " + upX + " downX is " + downX + " distance is " + (upX - downX));
                 //就隐藏掉
-                if((Math.abs(upX-downX))>300){
+                if ((Math.abs(upX - downX)) > 300) {
                     rootView.offsetLeftAndRight(mRlInner.getRight());
                     mListener.removeTipView(mResult);
                     mListener.onRemove();
-                }else{
-                    rootView.scrollTo(0,0);
+                } else {
+                    rootView.scrollTo(0, 0);
                 }
                 break;
         }

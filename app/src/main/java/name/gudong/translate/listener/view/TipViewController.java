@@ -21,6 +21,7 @@
 package name.gudong.translate.listener.view;
 
 import android.animation.Animator;
+import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -41,6 +42,7 @@ import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;
 
+import name.gudong.translate.GDApplication;
 import name.gudong.translate.R;
 import name.gudong.translate.manager.ReciteModulePreference;
 import name.gudong.translate.mvp.model.entity.translate.Result;

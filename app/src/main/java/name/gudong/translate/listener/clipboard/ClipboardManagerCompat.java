@@ -23,6 +23,7 @@ package name.gudong.translate.listener.clipboard;
 import android.content.ClipData;
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 
 import com.orhanobut.logger.Logger;
 

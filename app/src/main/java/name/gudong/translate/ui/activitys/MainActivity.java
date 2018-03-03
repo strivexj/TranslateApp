@@ -130,13 +130,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
         initSpinner();
         checkTranslateWay();
         checkVersion();
-        setUpDayline(false);
+        setUpDayline(true);
         checkIntent();
         boolean needShowGuidePermissionDialog = checkOverPermission();
         if(needShowGuidePermissionDialog){
             showGuidePermissionDialog();
         }else{
-            guideCheck();
+           // guideCheck();
         }
     }
 

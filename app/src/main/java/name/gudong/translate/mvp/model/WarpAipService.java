@@ -41,15 +41,15 @@ import rx.functions.Func1;
 /**
  * Created by GuDong on 1/22/16 10:37.
  * Contact with gudong.name@gmail.com.
- *
+ * <p>
  * Updated by Levine on 2/22/17 add google translation
  */
 public class WarpAipService {
 
-    private  ApiBaidu mApiBaidu;
-    private  ApiYouDao mApiYouDao;
-    private  ApiJinShan mApiJinShan;
-    private  ApiGoogle mApiGoogle;
+    private ApiBaidu mApiBaidu;
+    private ApiYouDao mApiYouDao;
+    private ApiJinShan mApiJinShan;
+    private ApiGoogle mApiGoogle;
 
     @Inject
     public WarpAipService(ApiBaidu mApiBaidu, ApiJinShan mApiJinShan, ApiYouDao mApiYouDao, ApiGoogle mApiGoogle) {
@@ -62,7 +62,7 @@ public class WarpAipService {
     public Observable<AbsResult> translate(ETranslateFrom way, String query) {
         Observable<AbsResult> resultObservable = null;
         query = query.toLowerCase();
-        switch (way){
+        switch (way) {
             case YOU_DAO:
                 resultObservable = mApiYouDao.translateYouDao(
                         query,
@@ -114,10 +114,9 @@ public class WarpAipService {
                 String patternWords = "[\u4e00-\u9fa5 ]{1,}";
                 Pattern r = Pattern.compile(patternWords);
                 Matcher m = r.matcher(query);
-                if(!m.matches()){
+                if (!m.matches()) {
                     targetLanguage = BuildConfig.GOOGLE_LANGUAGE_CHINEASE;
-                }
-                else {
+                } else {
                     targetLanguage = BuildConfig.GOOGLE_LANGUAGE_ENGLISH;
                 }
 
@@ -126,9 +125,9 @@ public class WarpAipService {
                             @Override
                             public Observable<AbsResult> call(ResponseBody result) {
                                 GoogleResult googleResult = new GoogleResult();
-                                try{
+                                try {
                                     googleResult.setTranslationResult(result.string());
-                                }catch (IOException e){
+                                } catch (IOException e) {
                                     e.printStackTrace();
                                 }
                                 return Observable.just(googleResult);

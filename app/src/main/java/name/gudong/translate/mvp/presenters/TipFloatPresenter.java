@@ -126,12 +126,14 @@ public class TipFloatPresenter extends BasePresenter<ITipFloatView> {
 
 
 
-    public void initFavoriteStatus(Result result) {
+    public boolean initFavoriteStatus(Result result) {
         Result localResult = isFavorite(result.getQuery());
         if (localResult != null) {
             mView.initWithFavorite(result);
+            return true;
         } else {
             mView.initWithNotFavorite(result);
+            return false;
         }
     }
 

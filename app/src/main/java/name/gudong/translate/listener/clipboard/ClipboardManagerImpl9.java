@@ -105,6 +105,7 @@ public class ClipboardManagerImpl9 extends ClipboardManagerCompat implements Run
         if (!TextUtils.isEmpty(mLastData) && mLastData.equals(data)) {
             return;
         }
+        Log.d("data",mLastData+" "+data);
         mLastData = data;
         notifyPrimaryClipChanged();
     }

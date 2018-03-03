@@ -38,7 +38,6 @@ public enum  ETranslateFrom {
     JIN_SHAN(2,"金山","http://dict-co.iciba.com/",ApiJinShan.class),
     GOOGLE(3, "谷歌", "http://translate.google.cn/",ApiGoogle.class);
 
-
     private int index;
     private String name;
     private String url;

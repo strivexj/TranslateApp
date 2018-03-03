@@ -122,8 +122,8 @@ public class ProcessTextActivity extends BaseActivity<TipFloatPresenter> impleme
     }
 
     @Override
-    public void onInitFavorite(ImageView mIvFavorite, Result result) {
-        mPresenter.initFavoriteStatus(result);
+    public boolean onInitFavorite(ImageView mIvFavorite, Result result) {
+        if(mPresenter.initFavoriteStatus(result))return true;else return false;
     }
 
     @Override
