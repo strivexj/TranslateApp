@@ -531,6 +531,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
     @OnClick(R.id.iv_favorite)
     public void onClickFavorite(final View view) {
         AnswerUtil.actionFavorite("main");
+
         mPresenter.startFavoriteAnim(view, new BasePresenter.AnimationEndListener() {
             @Override
             public void onAnimationEnd(Animator animation) {

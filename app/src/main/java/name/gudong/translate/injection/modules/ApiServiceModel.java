@@ -52,7 +52,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by GuDong on 12/27/15 16:17.
  * Contact with gudong.name@gmail.com.
- *
+ * <p>
  * Updated by Levine on 2/21/17 add google api
  */
 @Module
@@ -89,7 +89,9 @@ public class ApiServiceModel {
 
     @Provides
     @Singleton
-    ApiGoogle provideApiGoogle(){return createService(ETranslateFrom.GOOGLE);}
+    ApiGoogle provideApiGoogle() {
+        return createService(ETranslateFrom.GOOGLE);
+    }
 
     private <S> S createService(ETranslateFrom type) {
         Retrofit.Builder builder = new Retrofit.Builder()
@@ -105,7 +107,7 @@ public class ApiServiceModel {
     @Singleton
     OkHttpClient provideOkHttpClient() {
         Cache cache = new Cache(GDApplication.get().getCacheDir(), 10240 * 1024);
-        
+
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         if (BuildConfig.DEBUG) {
             builder.addNetworkInterceptor(new StethoInterceptor());
@@ -116,7 +118,7 @@ public class ApiServiceModel {
                 .readTimeout(20, TimeUnit.SECONDS);
         return builder.build();
     }
-    
+
     private class CacheInterceptor implements Interceptor {
         @Override
         public Response intercept(Chain chain) throws IOException {

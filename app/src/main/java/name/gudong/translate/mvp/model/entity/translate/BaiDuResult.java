@@ -31,7 +31,7 @@ import rx.functions.Func1;
 /**
  * Created by chenying on 16/1/27.
  */
-public class BaiDuResult extends AbsResult{
+public class BaiDuResult extends AbsResult {
     /**
      * from : en
      * to : zh
@@ -54,7 +54,7 @@ public class BaiDuResult extends AbsResult{
 
     @Override
     public List<String> wrapExplains() {
-        List<String>explains = new ArrayList<>();
+        List<String> explains = new ArrayList<>();
         Observable.from(getTrans_result())
                 .filter(new Func1<TransResultEntity, Boolean>() {
                     @Override
